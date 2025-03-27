@@ -9,23 +9,25 @@ export const Contact = () => {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(import.meta.env.VITE_SERVICE_ID);
 
     emailjs
-      .sendForm(
-        import.meta.env.VITE_SERVICE_ID,
-        import.meta.env.VITE_TEMPLATE_ID,
-        e.target,
-        import.meta.env.VITE_PUBLIC_KEY
-      )
-      .then((result) => {
-        alert("Message Sent Successfully");
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-        });
-      })
-      .catch(() => alert("Message Failed to Send"));
+    .sendForm(
+      import.meta.env.VITE_SERVICE_ID,
+      import.meta.env.VITE_TEMPLATE_ID,
+      e.target,
+      import.meta.env.VITE_PUBLIC_KEY
+    )
+    .then((result) => {
+      console.log("Success:", result.text);
+      alert("Message Sent Successfully");
+      setFormData({ name: "", email: "", message: "" });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Message Failed to Send");
+    });
+  
   };
   return (
     <section
